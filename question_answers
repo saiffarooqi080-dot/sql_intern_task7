@@ -1,0 +1,30 @@
+SQL View Interview Questions & Answers
+What is a view? 
+A view is a virtual table based on the result-set of a SQL query; it does not physically store data itself, but rather stores the query definition that retrieves data dynamically from its underlying base tables every time it is referenced.
+
+Can we update data through a view? 
+Yes, data can be updated through a view, but only if the view is updatable (typically based on a single table and lacking aggregate functions, GROUP BY, DISTINCT, or complex joins); changes modify the data in the base table.
+
+What is a materialized view? 
+A materialized view is a physical object that stores the pre-computed result set of a query on disk, acting as a cache to significantly improve performance for complex reporting by eliminating the need to re-execute joins and aggregations on demand.
+
+Difference between view and table? 
+A Table is a physical structure that stores data persistently on the disk, while a View is a logical structure that stores only the query definition and does not store data itself.
+
+How to drop a view? 
+The standard SQL command used to permanently remove a view definition from the database schema is DROP VIEW view_name;.
+
+Why use views? 
+Views are used for Security (limiting data access to specific rows/columns), Abstraction (hiding complex logic like joins and calculations), Simplification (providing reusable SQL logic), and ensuring Consistency in derived data.
+
+Can we create indexed views? 
+Yes, in some database systems like SQL Server, an indexed view is a view with a unique clustered index, making it a physical structure that stores and indexes the data, similar to a materialized view, for performance benefits.
+
+How to secure data using views? 
+Data is secured by defining the view to restrict access to a subset of rows (using the WHERE clause) or a subset of columns (omitting sensitive columns like sales figures), and then granting user permissions only to the view, not the base tables.
+
+What are limitations of views? 
+Views can incur a performance overhead because the underlying complex query is executed every time the view is queried; additionally, views containing aggregate functions, complex joins, or set operations are non-updatable.
+
+How does WITH CHECK OPTION work? 
+The WITH CHECK OPTION clause prevents INSERTs or UPDATEs performed through the view from creating rows that do not satisfy the view's original filtering condition (WHERE clause), thus ensuring data integrity relative to the view's definition.
