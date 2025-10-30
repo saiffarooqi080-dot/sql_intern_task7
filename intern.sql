@@ -1,0 +1,118 @@
+-- drop database printing;
+-- create database intern_task7;
+-- use intern_task7;
+-- CREATE TABLE intern_task7.Authors (
+--     AuthorID INT PRIMARY KEY,
+--     FirstName VARCHAR(50) NOT NULL,
+--     LastName VARCHAR(50) NOT NULL,
+--     Country VARCHAR(50)
+-- );
+
+-- CREATE TABLE intern_task7.Books (
+--     BookID INT PRIMARY KEY,
+--     Title VARCHAR(100) NOT NULL,
+--     AuthorID INT,
+--     CopiesSold BIGINT,
+--     PublicationYear INT,
+--     FOREIGN KEY (AuthorID) REFERENCES Authors(AuthorID)
+-- );
+
+-- INSERT INTO intern_task7.Authors (AuthorID, FirstName, LastName, Country) VALUES
+-- (1, 'Jane', 'Austen', 'UK'),
+-- (2, 'George', 'Orwell', 'UK'),
+-- (3, 'Mark', 'Twain', 'USA'),
+-- (4, 'Toni', 'Morrison', 'USA'),
+-- (5, 'Leo', 'Tolstoy', 'Russia');
+
+-- INSERT INTO intern_task7.Books (BookID, Title, AuthorID, CopiesSold, PublicationYear) VALUES
+-- (101, 'Pride and Prejudice', 1, 25000000, 1813),
+-- (102, '1984', 2, 30000000, 1949),
+-- (103, 'Animal Farm', 2, 15000000, 1945),
+-- (104, 'Beloved', 4, 1000000, 1987),
+-- (105, 'The Adventures of Tom Sawyer', 3, 12000000, 1876),
+-- (106, 'War and Peace', 5, 10000000, 1869),
+-- (107, 'Emma', 1, 8000000, 1815),
+-- (108, 'The Grapes of Wrath', NULL, 1000000, 1939);
+-- CREATE VIEW intern_task7.UK_Bestsellers_View AS
+-- SELECT
+--     B.Title,
+--     B.PublicationYear,
+--     B.CopiesSold,
+--     A.FirstName,
+--     A.LastName
+-- FROM
+--     Books B
+-- JOIN
+--     Authors A ON B.AuthorID = A.AuthorID
+-- WHERE
+--     A.Country = 'UK' AND B.CopiesSold >= 15000000;
+
+-- CREATE VIEW Global_Blockbusters_View AS
+-- SELECT
+--     B.Title,
+--     B.CopiesSold,
+--     A.FirstName,
+--     A.LastName
+-- FROM
+--     Books B
+-- JOIN
+--     Authors A ON B.AuthorID = A.AuthorID
+-- WHERE
+--     B.CopiesSold > (SELECT AVG(CopiesSold) FROM Books)
+-- ORDER BY
+--     B.CopiesSold DESC;
+-- CREATE VIEW Author_Total_Sales_Report_View AS
+-- SELECT
+--     A.FirstName,
+--     A.LastName,
+--     A.Country,
+--     SUM(B.CopiesSold) AS TotalCopiesSold,
+--     COUNT(B.BookID) AS TotalBooks
+-- FROM
+--     Authors A
+-- JOIN
+--     Books B ON A.AuthorID = B.AuthorID
+-- GROUP BY
+--     A.AuthorID, A.FirstName, A.LastName, A.Country;
+-- CREATE VIEW US_Author_Books_View AS
+-- SELECT
+--     A.FirstName,
+--     A.LastName,
+--     B.Title,
+--     B.CopiesSold
+-- FROM
+--     Authors A
+-- JOIN
+--     Books B ON A.AuthorID = B.AuthorID
+-- WHERE
+--     A.Country = 'USA';
+-- CREATE VIEW Recent_Publications_View AS
+-- SELECT
+--     BookID,
+--     Title,
+--     PublicationYear
+-- FROM
+--     Books
+-- WHERE
+--     PublicationYear > 1900
+-- WITH CHECK OPTION;
+-- CREATE VIEW Flexible_Author_Contact_View AS
+-- SELECT
+--     AuthorID,
+--     CONCAT(FirstName, ' ', LastName) AS AuthorContact,
+--     Country
+-- FROM
+--     Authors;
+-- CREATE VIEW Masked_Author_Security_View AS
+-- SELECT
+--     CONCAT(SUBSTR(FirstName, 1, 1), '***') AS MaskedFirstName,
+--     LastName,
+--     Title
+-- FROM
+--     Authors A
+-- JOIN
+--     Books B ON A.AuthorID = B.AuthorID;
+-- SELECT * FROM UK_Bestsellers_View;
+-- SELECT LastName, TotalBooks, TotalCopiesSold FROM Author_Total_Sales_Report_View WHERE Country = 'USA';
+
+-- SELECT * FROM Masked_Author_Security_View;
